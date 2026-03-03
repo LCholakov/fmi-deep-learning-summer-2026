@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 
-# Q1: Projected population chart shows we could reach 10 billion arond 2062
+# Q1: In approximately what year will there be more than 10 billion human beings on this planet?
+# Projected population chart shows we could reach 10 billion arond 2062
 
 # Q2: Analysis of life expect to GDP/cap chart:
 # Clear correlation shows higher GDP/cap is a decent predictor of longer life expectation.
