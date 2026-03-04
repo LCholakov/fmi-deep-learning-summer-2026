@@ -27,5 +27,5 @@ plt.tight_layout()
 plt.show()
 
 # Q: What can you say about the plot?
-# A. The countries in blue, corresponding to Africa, 
+# A. The countries in blue, corresponding to Africa,
 # have both low life expectancy and a low GDP per capita.
