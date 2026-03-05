@@ -33,5 +33,8 @@ def main():
     # forward and backward with a strong bias towards forward due to the 
     # 1/3 chance to step back, 2/3 chance to step forward.
 
+    # edit: Just read task03. I guess we can't step down towards the basement 
+    # so negative step count is unallowed. Will be fixed in task03.
+
 if __name__ == "__main__":
     main()
