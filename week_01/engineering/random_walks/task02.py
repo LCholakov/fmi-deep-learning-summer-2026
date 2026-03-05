@@ -29,6 +29,9 @@ def main():
     print(np_step_track)
 
     # Do you notice anything unexpected in the output?
+    # Not really, it's pretty much what I expected - a bit like tango, alternating 
+    # forward and backward with a strong bias towards forward due to the 
+    # 1/3 chance to step back, 2/3 chance to step forward.
 
 if __name__ == "__main__":
     main()
