@@ -24,15 +24,13 @@ def main():
     
     for i in range(100):
         die_roll = get_int_1to6(my_rng)
-        np_step_track = np.append(np_step_track, np_step_track[-1] + get_next_move(die_roll, my_rng))
+        next_pos = np_step_track[-1] + get_next_move(die_roll, my_rng)
+        if(next_pos < 0):
+            np_step_track = np.append(np_step_track, 0)
+        else: 
+            np_step_track = np.append(np_step_track, next_pos)
 
-    print(np_step_track.tolist()) # cast to list to match the expected format with commas 
+    print(np_step_track.tolist())
 
-    # Do you notice anything unexpected in the output?
-    # Not really, it's pretty much what I expected - a bit like tango, alternating 
-    # forward and backward with a strong bias towards forward due to the 
-    # 1/3 chance to step back, 2/3 chance to step forward.
-
-    # edit: Just read task03. I guess we can't step down towards the basement 
 if __name__ == "__main__":
     main()
