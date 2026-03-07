@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from task05 import get_my_rng, get_int_1to6, get_next_move, get_one_walk, get_five_walks
+from task06 import get_my_rng, get_int_1to6, get_next_move, get_one_walk, get_five_walks
 
 # absolutely copiet my task02 tests...
 
