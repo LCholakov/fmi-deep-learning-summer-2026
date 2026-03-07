@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def get_my_rng():
     return np.random.default_rng(123)
 
@@ -7,8 +8,10 @@ def get_my_rng():
 def get_float_0to1(rng):
     return rng.random()
 
+
 def get_int_1to6(rng):
-    return rng.integers(1, 6+1)
+    return rng.integers(1, 6 + 1)
+
 
 def main():
     # test how it works
@@ -35,8 +38,9 @@ def main():
             curr_step += 1
         case 6:
             curr_step += get_int_1to6(my_rng)
-    
+
     print(f'After throw step = {curr_step}')
+
 
 if __name__ == "__main__":
     main()
