@@ -32,12 +32,15 @@ def main():
             np_step_track = np.append(np_step_track, next_pos)
 
     fig, ax = plt.subplots(figsize=(6, 4))
+
     
     # My chart looks different from expected.
-    # compared my output data with expected => expected same as mine.
+    # compared my output data with data with expected resykt  => expected same as mine.
     # expected = [0, 0, 1, 2, 1, 3, 2, 1, 2, 1, 2, 3, 4, 7, 6, 7, 8, 14, 13, 14, 13, 12, 11, 12, 13, 12, 13, 14, 13, 14, 15, 20, 19, 24, 23, 24, 25, 24, 23, 22, 21, 22, 21, 22, 23, 22, 23, 22, 21, 22, 21, 22, 21, 23, 24, 25, 29, 32, 31, 30, 32, 33, 34, 33, 34, 35, 36, 42, 41, 42, 43, 44, 43, 44, 45, 47, 48, 49, 51, 52, 51, 52, 51, 52, 51, 52, 53, 54, 55, 56, 55, 54, 55, 54, 55, 56, 57, 58, 57, 58, 59]
+    print(np_step_track.tolist())
+    # my ouput = [0, 0, 1, 2, 1, 3, 2, 1, 2, 1, 2, 3, 4, 7, 6, 7, 8, 14, 13, 14, 13, 12, 11, 12, 13, 12, 13, 14, 13, 14, 15, 20, 19, 24, 23, 24, 25, 24, 23, 22, 21, 22, 21, 22, 23, 22, 23, 22, 21, 22, 21, 22, 21, 23, 24, 25, 29, 32, 31, 30, 32, 33, 34, 33, 34, 35, 36, 42, 41, 42, 43, 44, 43, 44, 45, 47, 48, 49, 51, 52, 51, 52, 51, 52, 51, 52, 53, 54, 55, 56, 55, 54, 55, 54, 55, 56, 57, 58, 57, 58, 59]
     # ax.plot(expected)
-
+    # the img in Task 04 shows a big drop around iteration #5
     ax.plot(np_step_track)
 
     plt.show()
