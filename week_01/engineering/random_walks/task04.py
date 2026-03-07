@@ -46,6 +46,8 @@ def main():
     # the img in Task 04 shows a big drop around iteration #5
     ax.plot(np_step_track)
 
+    ax.set_title('Random walk')
+    ax.set_xlabel('Throw')
     plt.show()
 
 

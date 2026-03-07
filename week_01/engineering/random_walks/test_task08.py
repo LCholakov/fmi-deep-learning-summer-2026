@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from task07 import get_my_rng, get_int_1to6, get_next_move, get_one_walk, get_twenty_walks, get_float_0to1
+from task08 import get_my_rng, get_int_1to6, get_next_move, get_one_walk, get_n_walks, get_float_0to1
 
 # absolutely copiet my task02 tests...
 
@@ -87,9 +87,10 @@ class TestGetOneWalk(unittest.TestCase):
         self.assertEqual(len(walk), 101)
 
 
-class TestGetTwentyWalks(unittest.TestCase):
+class TestGetNWalks(unittest.TestCase):
 
     def test_when_called_with_rng_then_returns_twenty_walks(self):
         rng = np.random.default_rng(1)
-        walks = get_twenty_walks(rng)
-        self.assertEqual(len(walks), 20)
+        n = 500
+        walks = get_n_walks(n, rng)
+        self.assertEqual(len(walks), n)

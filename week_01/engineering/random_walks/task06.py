@@ -58,6 +58,9 @@ def main():
     ax.plot(np.array(all_walks[3]))
     ax.plot(np.array(all_walks[4]))
 
+    ax.set_title('Random walks')
+    ax.set_xlabel('Throw')
+
     plt.show()
 
 

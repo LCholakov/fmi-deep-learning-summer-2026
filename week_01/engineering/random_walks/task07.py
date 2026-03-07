@@ -5,8 +5,10 @@ import matplotlib.pyplot as plt
 def get_my_rng():
     return np.random.default_rng(123)
 
+
 def get_float_0to1(rng):
     return rng.random()
+
 
 def get_int_1to6(rng):
     #.item suggested by copilot to get plain int, because otherwise my output with lists
@@ -32,7 +34,7 @@ def get_one_walk(rng: np.random.Generator):
     for i in range(100):
         die_roll = get_int_1to6(rng)
         is_a_fall = False if get_float_0to1(rng) > 0.005 else True
-        if(is_a_fall):
+        if (is_a_fall):
             step_track.append(0)
         else:
             next_pos = step_track[-1] + get_next_move(die_roll, rng)
@@ -58,10 +60,14 @@ def main():
     # print (all_walks)
 
     fig, ax = plt.subplots(figsize=(6, 4))
-    for i in range (20):
+    for i in range(20):
         ax.plot(np.array(all_walks[i]))
-    
+
+    ax.set_title('Random walks')
+    ax.set_xlabel('Throw')
     plt.show()
+
+
 # It looks kinda similar to the sample. Not the same
 
 if __name__ == "__main__":
