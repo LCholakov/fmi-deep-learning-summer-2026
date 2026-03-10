@@ -95,15 +95,15 @@ def main():
     learning_rate = 0.05
     eps = 0.001
 
-    # print(f"OR LEARNING RATE = {learning_rate}\tEPOCHS = {epochs}")
-    # final_w_or = train(w_or, or_dataset, learning_rate, eps=eps, epochs=epochs)
-    # final_loss_or = calculate_loss(final_w_or, or_dataset)
-    # print(f"Final w (OR): {final_w_or}, Final MSE (OR): {final_loss_or}")
-    # preds_or = predict_all(final_w_or, or_dataset)
-    # print("OR predictions:")
-    # for (x1, x2, y), p in zip(or_dataset, preds_or):
-    #     print(f"({int(x1)}, {int(x2)}) -> y_hat={p} (y={int(y)})")
-    # print()
+    print(f"OR LEARNING RATE = {learning_rate}\tEPOCHS = {epochs}")
+    final_w_or = train(w_or, or_dataset, learning_rate, eps=eps, epochs=epochs)
+    final_loss_or = calculate_loss(final_w_or, or_dataset)
+    print(f"Final w (OR): {final_w_or}, Final MSE (OR): {final_loss_or}")
+    preds_or = predict_all(final_w_or, or_dataset)
+    print("OR predictions:")
+    for (x1, x2, y), p in zip(or_dataset, preds_or):
+        print(f"({int(x1)}, {int(x2)}) -> y_hat={p} (y={int(y)})")
+    print()
 
     # OUTPUT 
 # OR predictions:
