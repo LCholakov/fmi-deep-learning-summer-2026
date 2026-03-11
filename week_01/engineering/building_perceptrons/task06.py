@@ -67,15 +67,15 @@ def main():
     learning_rate = 0.01
     eps = 0.001
 
-    # print(f"\tAND MODEL\tLEARNING RATE = {learning_rate}\tEPOCHS = {epochs}")
-    # final_weights_and = train(weights_and, dataset_and, learning_rate, eps,
-    #                           epochs)
-    # final_loss_and = calculate_loss(final_weights_and, dataset_and)
-    # print(f"\tAND Final w: {final_weights_and}, Final MSE: {final_loss_and}\n")
-    # predsictions_and = predict_all(final_weights_and, dataset_and)
-    # print("\tAND predictions:")
-    # for (x1, x2, y), p in zip(dataset_and, predsictions_and):
-    #     print(f"({x1}, {x2}) -> y_hat={p}\t(y={y})")
+    print(f"\tAND MODEL\tLEARNING RATE = {learning_rate}\tEPOCHS = {epochs}")
+    final_weights_and = train(weights_and, dataset_and, learning_rate, eps,
+                              epochs)
+    final_loss_and = calculate_loss(final_weights_and, dataset_and)
+    print(f"\tAND Final w: {final_weights_and}, Final MSE: {final_loss_and}\n")
+    predsictions_and = predict_all(final_weights_and, dataset_and)
+    print("\tAND predictions:")
+    for (x1, x2, y), p in zip(dataset_and, predsictions_and):
+        print(f"({x1}, {x2}) -> y_hat={p}\t(y={y})")
 
 
 #   AND predictions without bias:
