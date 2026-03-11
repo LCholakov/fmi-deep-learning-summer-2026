@@ -1,5 +1,5 @@
 # Q: general form of the two models
-# A: We implement a single neuron with two inputs and 2 parameters (aka 2 weights)
+# A: We implement a perceptron with two inputs and 2 parameters (aka 2 weights)
 # multiply weights by inputs, add products.
 # Consider this a classification task
 # x1, x2 -> x1×w1+x2×w2 -> sigmoid
@@ -10,9 +10,10 @@
 
 # In the case of AND:
 # input 0,0 -> 0. This is maxumum lack of confidence. Right on the fence.
-# input 0,1 -> ~0.290 Low confidence and wrong
-# input 1,0 -> ~0.377 Low confidence and wrong
-# input 1,1 -> ~0.667 higher confidence, correct, but not satisfactory.
+# input 0,1 -> ~0.3 Low confidence and wrong
+# input 1,0 -> ~0.3 Low confidence and wrong
+# input 1,1 -> ~0.67 higher confidence, correct, but not satisfactory.
+# I guess we could set a threshold of 0.4 but that seems suboptimal. 
 # Note1: impossible to bring input(0,0) to fall below 0.
 # Note2: impossible for the model to find weights that dramatically
 # increase y_hat for 1,1, while at the same time reducing below zero
@@ -20,14 +21,14 @@
 
 # In the case of OR:
 # input 0,0 -> 0. This is maxumum lack of confidence. Right on the fence.
-# input 0,1 -> ~0.857 Good confidence and correct
-# input 1,0 -> ~0.486 Good confidence and correct
-# input 1,1 -> ~1.333 higher confidence, correct.
+# input 0,1 -> ~0.67 Good confidence and correct
+# input 1,0 -> ~0.67 Good confidence and correct
+# input 1,1 -> ~1.3 higher confidence, correct.
 # Note1: impossible to bring input(0,0) to fall below 0.
 
 # Conclusion: OR can be more-or-less approximated with one neuron and two params.
 # AND needs a bit more spice to get it to work convincigly - an additional param
-# bias, to shift everything down a bit in order to solve
+# bias, to shift everything a bit in order to solve
 # the issue with multiplying and adding only zeroes.
 
 import numpy as np
@@ -54,9 +55,19 @@ def calculate_loss(weights, dataset):
 
 
 def finite_diff_grad(weights, dataset, eps):
-    loss_plus = calculate_loss(weights + eps, dataset)
-    loss_minus = calculate_loss(weights - eps, dataset)
-    return (loss_plus - loss_minus) / (2.0 * eps)
+# seems like I have been just broadcasting a scalar
+# to both weights. Changed to be a vector.
+    # loss_plus = calculate_loss(weights + eps, dataset)
+    # loss_minus = calculate_loss(weights - eps, dataset)
+    # return (loss_plus - loss_minus) / (2.0 * eps)
+
+    g = np.zeros_like(weights, dtype=float)
+    for i in range(len(weights)):
+        e = np.zeros_like(weights); e[i] = 1.0
+        loss_plus  = calculate_loss(weights + eps * e, dataset)
+        loss_minus = calculate_loss(weights - eps * e, dataset)
+        g[i] = (loss_plus - loss_minus) / (2.0 * eps)
+    return g
 
 
 def train(weights, dataset, learning_rate, eps, epochs):
@@ -99,26 +110,26 @@ def main():
 
 #   AND predictions:
 # (0.0, 0.0) -> y_hat=0.0 (y=0.0)
-# (0.0, 1.0) -> y_hat=0.2895755654019222  (y=0.0)
-# (1.0, 0.0) -> y_hat=0.3770911012647492  (y=0.0)
-# (1.0, 1.0) -> y_hat=0.6666666666666714  (y=1.0)
+# (0.0, 1.0) -> y_hat=0.3333333333333243  (y=0.0)
+# (1.0, 0.0) -> y_hat=0.3333333333333426  (y=0.0)
+# (1.0, 1.0) -> y_hat=0.666666666666667   (y=1.0)
 
-    print(f"\tOR MODEL\tLEARNING RATE = {learning_rate}\tEPOCHS = {epochs}")
-    final_weights_or = train(weights_or, dataset_or, learning_rate, eps,
-                             epochs)
-    final_loss_or = calculate_loss(final_weights_or, dataset_or)
-    print(f"\tOR Final w: {final_weights_or}, Final MSE: {final_loss_or}\n")
-    predsictions_or = predict_all(final_weights_or, dataset_or)
-    print("\tpredictions:")
-    for (x1, x2, y), p in zip(dataset_or, predsictions_or):
-        print(f"({x1}, {x2}) -> y_hat={p}\t(y={y})")
+    # print(f"\tOR MODEL\tLEARNING RATE = {learning_rate}\tEPOCHS = {epochs}")
+    # final_weights_or = train(weights_or, dataset_or, learning_rate, eps,
+    #                          epochs)
+    # final_loss_or = calculate_loss(final_weights_or, dataset_or)
+    # print(f"\tOR Final w: {final_weights_or}, Final MSE: {final_loss_or}\n")
+    # predsictions_or = predict_all(final_weights_or, dataset_or)
+    # print("OR\tpredictions:")
+    # for (x1, x2, y), p in zip(dataset_or, predsictions_or):
+    #     print(f"({x1}, {x2}) -> y_hat={p}\t(y={y})")
 
 
 #   OR predictions:
 # (0.0, 0.0) -> y_hat=0.0 (y=0.0)
-# (0.0, 1.0) -> y_hat=0.8469217320902067  (y=1.0)
-# (1.0, 0.0) -> y_hat=0.4864116012431221  (y=1.0)
-# (1.0, 1.0) -> y_hat=1.3333333333333288  (y=1.0)
+# (0.0, 1.0) -> y_hat=0.66666666666666    (y=1.0)
+# (1.0, 0.0) -> y_hat=0.666666666666673   (y=1.0)
+# (1.0, 1.0) -> y_hat=1.333333333333333   (y=1.0)
 
 if __name__ == "__main__":
     main()
