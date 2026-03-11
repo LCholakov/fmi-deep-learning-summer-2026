@@ -13,7 +13,7 @@
 # input 0,1 -> ~0.3 Low confidence and wrong
 # input 1,0 -> ~0.3 Low confidence and wrong
 # input 1,1 -> ~0.67 higher confidence, correct, but not satisfactory.
-# I guess we could set a threshold of 0.4 but that seems suboptimal. 
+# I guess we could set a threshold of 0.4.
 # Note1: impossible to bring input(0,0) to fall below 0.
 # Note2: impossible for the model to find weights that dramatically
 # increase y_hat for 1,1, while at the same time reducing below zero
@@ -55,16 +55,17 @@ def calculate_loss(weights, dataset):
 
 
 def finite_diff_grad(weights, dataset, eps):
-# seems like I have been just broadcasting a scalar
-# to both weights. Changed to be a vector.
+    # seems like I have been just broadcasting a scalar
+    # to both weights. Changed to be a vector.
     # loss_plus = calculate_loss(weights + eps, dataset)
     # loss_minus = calculate_loss(weights - eps, dataset)
     # return (loss_plus - loss_minus) / (2.0 * eps)
 
     g = np.zeros_like(weights, dtype=float)
     for i in range(len(weights)):
-        e = np.zeros_like(weights); e[i] = 1.0
-        loss_plus  = calculate_loss(weights + eps * e, dataset)
+        e = np.zeros_like(weights)
+        e[i] = 1.0
+        loss_plus = calculate_loss(weights + eps * e, dataset)
         loss_minus = calculate_loss(weights - eps * e, dataset)
         g[i] = (loss_plus - loss_minus) / (2.0 * eps)
     return g
@@ -114,15 +115,15 @@ def main():
 # (1.0, 0.0) -> y_hat=0.3333333333333426  (y=0.0)
 # (1.0, 1.0) -> y_hat=0.666666666666667   (y=1.0)
 
-    # print(f"\tOR MODEL\tLEARNING RATE = {learning_rate}\tEPOCHS = {epochs}")
-    # final_weights_or = train(weights_or, dataset_or, learning_rate, eps,
-    #                          epochs)
-    # final_loss_or = calculate_loss(final_weights_or, dataset_or)
-    # print(f"\tOR Final w: {final_weights_or}, Final MSE: {final_loss_or}\n")
-    # predsictions_or = predict_all(final_weights_or, dataset_or)
-    # print("OR\tpredictions:")
-    # for (x1, x2, y), p in zip(dataset_or, predsictions_or):
-    #     print(f"({x1}, {x2}) -> y_hat={p}\t(y={y})")
+    print(f"\tOR MODEL\tLEARNING RATE = {learning_rate}\tEPOCHS = {epochs}")
+    final_weights_or = train(weights_or, dataset_or, learning_rate, eps,
+                             epochs)
+    final_loss_or = calculate_loss(final_weights_or, dataset_or)
+    print(f"\tOR Final w: {final_weights_or}, Final MSE: {final_loss_or}\n")
+    predsictions_or = predict_all(final_weights_or, dataset_or)
+    print("OR\tpredictions:")
+    for (x1, x2, y), p in zip(dataset_or, predsictions_or):
+        print(f"({x1}, {x2}) -> y_hat={p}\t(y={y})")
 
 
 #   OR predictions:
