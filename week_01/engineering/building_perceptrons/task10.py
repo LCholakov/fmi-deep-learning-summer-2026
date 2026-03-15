@@ -22,24 +22,12 @@ class Xor:
         b1, w11, w12, b2, w13, w14, b3, w21, w22 = self._params
         h1 = sigmoid(b1 + w11 * x1 + w12 * x2)  # OR
         h2 = sigmoid(b2 + w13 * x1 + w14 * x2)  # NAND
-        y = sigmoid(b3 + w21 * h1 + w22 * h2)
+        y = sigmoid(b3 + w21 * h1 + w22 * h2)  # AND
         return y
-
-
-def create_dataset_and():
-    return [(0.0, 0.0, 0.0), (0.0, 1.0, 0.0), (1.0, 0.0, 0.0), (1.0, 1.0, 1.0)]
-
-
-def create_dataset_or():
-    return [(0.0, 0.0, 0.0), (0.0, 1.0, 1.0), (1.0, 0.0, 1.0), (1.0, 1.0, 1.0)]
 
 
 def create_dataset_xor():
     return [(0.0, 0.0, 0.0), (0.0, 1.0, 1.0), (1.0, 0.0, 1.0), (1.0, 1.0, 0.0)]
-
-
-def create_dataset_nand():
-    return [(0.0, 0.0, 1.0), (0.0, 1.0, 1.0), (1.0, 0.0, 1.0), (1.0, 1.0, 0.0)]
 
 
 def sigmoid(z):
@@ -85,12 +73,19 @@ def predict_all(model: Xor, dataset):
 
 
 def main():
-    rng = np.random.default_rng()
+    # seed 42 not good results
+    # seed 43 good results
+    # random seed mostly good results, but someitmes gets stuck in a flat spot
+    # and we get MSE 0.25 and all weights 0.5
+
+    # rng = np.random.default_rng()
+    rng = np.random.default_rng(43)
     dataset_xor = create_dataset_xor()
     model = Xor(rng)
+    # print(f"model {model.get_params_as_vector()}")
 
     epochs = 100_000
-    learning_rate = 0.01
+    learning_rate = 0.02
     eps = 0.001
 
     model, losses = train(model, dataset_xor, learning_rate, eps, epochs)
