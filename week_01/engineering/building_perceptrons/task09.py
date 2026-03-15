@@ -5,14 +5,18 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def create_dataset_nand():
     return [(0.0, 0.0, 1.0), (0.0, 1.0, 1.0), (1.0, 0.0, 1.0), (1.0, 1.0, 0.0)]
+
 
 def sigmoid(z):
     return 1.0 / (1.0 + np.exp(-z))
 
+
 def initialize_weights(x, y, rng: np.random.Generator):
-    return rng.uniform(x, y, 3) 
+    return rng.uniform(x, y, 3)
+
 
 def calculate_loss(weights, dataset):
     b, w1, w2 = weights
@@ -22,14 +26,17 @@ def calculate_loss(weights, dataset):
         errors_sq.append((y - p)**2)
     return np.mean(errors_sq)
 
+
 def finite_diff_grad(weights, dataset, eps):
     g = np.zeros_like(weights, dtype=float)
     for i in range(len(weights)):
-        e = np.zeros_like(weights); e[i] = 1.0
-        loss_plus  = calculate_loss(weights + eps * e, dataset)
+        e = np.zeros_like(weights)
+        e[i] = 1.0
+        loss_plus = calculate_loss(weights + eps * e, dataset)
         loss_minus = calculate_loss(weights - eps * e, dataset)
         g[i] = (loss_plus - loss_minus) / (2.0 * eps)
     return g
+
 
 def train(weights, dataset, learning_rate, eps, epochs):
     losses = []
@@ -39,12 +46,14 @@ def train(weights, dataset, learning_rate, eps, epochs):
         losses.append(calculate_loss(weights, dataset))
     return weights, losses
 
+
 def predict_all(weights, dataset):
     b, w1, w2 = weights
     preds = []
     for x1, x2, _ in dataset:
         preds.append(sigmoid(b + w1 * x1 + w2 * x2))
     return preds
+
 
 def main():
     rng = np.random.default_rng()
@@ -70,6 +79,7 @@ def main():
     # plt.ylabel("loss")
     # plt.title("NAND")
     # plt.show()
+
 
 if __name__ == "__main__":
     main()
