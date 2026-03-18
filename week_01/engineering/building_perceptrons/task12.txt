@@ -1,0 +1,28 @@
+1. What is machine learning in 1 sentence?
+Процес за автоматично разпознаване на образи 
+// pattern recognition = разпознаване на образи според https://www.researchgate.net/publication/377768100_IZKUSTVEN_INTELEKT_OSNOVNI_KONCEPCII
+
+2. What is deep learning in 1 sentence?
+Процес за автоматично определяне на характеристики и на разпознаване на образи.
+
+3. What is does model training mean in 1 sentence?
+Промяна на стойностите на параметрите с цел минимизиране на грешка спрямо обучителни данни.
+
+4. What task do Large Language Models solve?
+Предсказват кой токен е с най-висока вероятност да е следващ.
+
+5. What is the difference between loss functions and metrics?
+Функция на загубата мери колко точно моделът апроксимира желаният изход и се използва в прцеса на оптимизиране на модела.
+Метриките се използват за отчитане на производителността на модела при прилагане на реални данни. 
+
+6. Why is the use of mean squared error preferred to the use of mean absolute error?
+Грешките се "наказват" по-силно при средноквадратична грешка, заради квадратичното нарастване в стойностите.
+
+7. Why can't we cube the difference to get the mean error instead of squaring it?
+Вдигане на куб запазва знака и следователно положителни и отрицателни грешки могат да се взаимоизключат.
+Също така, тъй като расте с по-висока степен от квадрат, големите грешки се наказват дори повече, като така евентуални крайни отклонения в примерите "outliers" биха имали нежелано голямо влияние.  
+
+8. Why is the derivative of the loss function beneficial during model training?
+Можем да извършваме градиентно спускане към минимизиране на загубата: 
+- разбираме в коя посока да се движим
+- разбираме с каква скорост да се движим

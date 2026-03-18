@@ -1,0 +1,62 @@
+1. Which class of AI techniques began to work around 2005 for solving real-world problems?
+Машинно самообучение чрез едро-мащабни невронни мрежи. 
+
+2. What is a classic application of AI is discussed in the video?
+Разпознаване лица. 
+
+3. What is the simplest way of getting Machine Learning to solve a task?
+Направлявано самообучение. 
+
+4. Define what supervised learning is.
+Предоставяме на модела обучително множество от примери с двойки (вход, изход).
+
+5. What does AI require in order to work at all?
+Големи корпуси обучителни данни.
+
+6. What class of tasks does the task for facial recognition belong to?
+Класификационна задача.
+
+7. What is the task solved by each neuron in the brain?
+Разпознава много малки и прости характеристики/образи.
+
+8. What happens when a neuron recognizes a pattern?
+Изпраща ел. сигнал до всички неврони, към които е свързан.
+
+9. What is a digital picture made up of?
+Пиксели - цветни точки.
+
+10. What are the three reasons that allowed the modelling of human brain cells in software?
+- Развитието на дълбоко самообучение;
+- Наличността на големи обеми от данни;
+- Наличността на огромна изчислителна мощност.
+
+11. Which type of computer processor is suited really well for performing the mathematics related to deep learning?
+Графична карта GPU.
+
+12. Do the capabilities of neural networks grow with scale?
+Да, при наличие на достатъчно ресурс (изчислителна мощ, данни)
+
+13. What allowed for the biggest and fastest advances in the field?
+Използването на големи данни и голяма изчислителна сила. 
+
+14. What is the name of the probably most important paper in the last decade?
+"Вниманието е всичко, от което се нуждаеш"
+
+15. What is the Transformer architecture designed for?
+За големи езикови модели.
+
+16. What is the innovation that the Transformer architecture has?
+Механизъм на "внимание".
+
+17. What is the key point about GPT-3?
+Огромен модел обучен върху почти всичко написано някога.
+
+18. Is machine learning more efficient at learning than humans? Why?
+Не. Човек постига подобна производителност с много по-малко входни данни. 
+
+19. What is "the bitter truth"?
+Горчивата истина е фактът, че напредъкът в тази сфера не е постигнат чрез научен напредък, а чрез просто мащабиране на концепциите - повече изчислителна мощ, повече данни. 
+
+20. What is one reason why ChatGPT is not conscious?
+Нещо е съзнателно, ако е "като нещо" човек да бъде това нещо.
+Не е като нищо да бъде човек ChatGPT, защото ChatGPT няма никакви субективни преживявания. Просто предсказва следващ токен, когато бъде инструктиран.
