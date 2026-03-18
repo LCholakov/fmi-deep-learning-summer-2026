@@ -1,26 +1,12 @@
-# I don't a neural network can work accurately with x*x.
-# It should give an approximation.
+# This needs to result in an approximation, not exact x*x
+# There actually are some NN architectures multiplying f(x) with g(x), 
+# most notably LSTMs and Highway networks. But even these have one or 
+# both of f(x), g(s) bounded (by logistic sigmoid or tanh), thus are 
+# unable to model x*x fully.
+# ref: https://stackoverflow.com/questions/55170460/neural-network-for-square-x2-approximation
+
 
 import numpy as np
-
-X_MIN, X_MAX = 2, 12
-Y_MAX = float(X_MAX**2)
-
-
-# Copilot suggesion to use scaled x and y to solve the issue of 
-# the network resolving to a single output value 59 for any input. 
-def scale_x(x):
-    # to [0,1]
-    return (x - X_MIN) / float(X_MAX - X_MIN)
-
-
-def scale_y(y):
-    # to [0,1]
-    return y / Y_MAX
-
-
-def unscale_y(y_s):
-    return y_s * Y_MAX
 
 
 class ModelPowerOfTwo:
@@ -45,10 +31,8 @@ class ModelPowerOfTwo:
 
 def create_dataset_power_of_two(start, count):
     dataset = []
-    for n in range(start, start + count):
-        x_s = scale_x(n)
-        y_s = scale_y(n * n)
-        dataset.append([x_s, y_s])
+    for n in range (start, start + count):
+        dataset.append([n, n**2])
     return dataset
 
 
@@ -64,7 +48,7 @@ def calculate_loss(model: ModelPowerOfTwo, params: np.ndarray, dataset):
         p = model.forward(x)
         total += (y - p)**2
         iters += 1
-    return 0.0 if iters == 0 else float(total / iters)
+    return 0.0 if iters == 0 else float(total / iters) 
 
 
 def finite_diff_grad(model, params, dataset, eps):
@@ -109,9 +93,7 @@ def main():
     model, losses = train(model, dataset_square, learning_rate, eps, epochs)
     predictions = predict_all(model, dataset_square)
 
-    print(
-        f"\tMODEL POWER OF TWO\tLEARNING RATE = {learning_rate}\tEPOCHS = {epochs}"
-    )
+    print(f"\tMODEL POWER OF TWO\tLEARNING RATE = {learning_rate}\tEPOCHS = {epochs}")
     final_loss = calculate_loss(model, model.get_params_as_vector(),
                                 dataset_square)
     print(
@@ -122,19 +104,12 @@ def main():
     for (x, y), p in zip(dataset_square, predictions):
         print(f"({x}) -> y_hat={p:.6f}\t(y={y})")
 
-    print("\tPOWER OF TWO predictions:")
-    for (x_s, y_s), p_s in zip(dataset_square, predictions):
-        x = int(round(x_s * (X_MAX - X_MIN) + X_MIN))
-        y = int(round(y_s * Y_MAX))
-        y_hat = unscale_y(p_s)
-        print(f"({x}) -> y_hat={y_hat:.6f}\t(y={y})")
-
 
 if __name__ == "__main__":
     main()
 
 #         MODEL POWER OF TWO      LEARNING RATE = 0.02    EPOCHS = 100000
-#         POWER OF TWO Final params: [ 5.50052472  3.50038085  0.78625983 25.30856546  7.16053282  2.85733179
+#         POWER OF TWO Final params: [ 5.50052472  3.50038085  0.78625983 25.30856546  7.16053282  2.85733179     
 #  32.86716236 -2.493431   32.05915147 -3.43287639], Final MSE: 2038.0001881508529
 
 #         POWER OF TWO predictions:
@@ -152,18 +127,20 @@ if __name__ == "__main__":
 
 # Why this happened
 
+
 # Sigmoid saturation + unscaled inputs/targets.
-# With inputs in [2 … 12] and random weights in [-1, 1],
-# the pre-activations b + w*x can easily reach large
-# magnitudes (e.g., |z| ≳ 5), pushing the three sigmoids
-# to ~0 or ~1 almost everywhere. Once hidden units act like
-# constants, the model reduces to y ≈ constant, and the MSE
+# With inputs in [2 … 12] and random weights in [-1, 1], 
+# the pre-activations b + w*x can easily reach large 
+# magnitudes (e.g., |z| ≳ 5), pushing the three sigmoids 
+# to ~0 or ~1 almost everywhere. Once hidden units act like 
+# constants, the model reduces to y ≈ constant, and the MSE 
 # optimum becomes the mean.
-# Your final weights also reflect this: because hidden units
-# saturated, the output learned b4 + w21 + w22 + w23 ≈ 59.
+# Your final weights also reflect this: because hidden units 
+# saturated, the output learned b4 + w21 + w22 + w23 ≈ 59. 
 
 # Finite-difference gradients on a flat landscape.
-# With saturated sigmoids, the loss surface gets very flat w.r.t.
-# hidden-layer parameters. Finite differences then report near‑zero
-# change for most directions, so the only effective move is to adjust
+# With saturated sigmoids, the loss surface gets very flat w.r.t. 
+# hidden-layer parameters. Finite differences then report near‑zero 
+# change for most directions, so the only effective move is to adjust 
 # the output bias/weights to the mean.
+
